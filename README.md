@@ -1,6 +1,6 @@
-# SUMOBOT
+# SUMOBOT CHUZON
 
-## Integrantes
+### Integrantes
 - Nicolás Caceres
 - Ignacio Noguera
 - Jessica Pizarro
