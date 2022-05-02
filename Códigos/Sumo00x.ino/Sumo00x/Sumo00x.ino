@@ -26,8 +26,15 @@ short usSpeed = 150;      //Velocidad por defecto
 unsigned short usMotor_Status = BRAKE;  //Estado Motor
 
 //Definición de sensores
-#define S1 26      //Infrarrojo - Pin digital
-const int S2 = 27; //Seguidor de linea - Pin Digital
+//Infrarrojos
+#define S1 26      //Frontal Pin digital
+#define S2 27      //Derecha Pin digital
+#define S3 28      //Izquierda Pin digital
+//Seguidores de Linea
+const int S4 = A4; //Frontal Derecho - Pin Digital
+const int S5 = 30; //Frontal Izquierdo - Pin Digital
+const int S6 = 31; //Posterior Derecho - Pin Digital
+const int S7 = 32; //Posterior Izquierdo - Pin Digital
 
 void setup() {
   Serial.begin(9600);
@@ -47,7 +54,7 @@ void setup() {
   //    INFRARROJO E18-D80NK
   pinMode(S1,INPUT_PULLUP);
   //    SEGUIDOR
-  pinMode(S2,INPUT);
+  pinMode(S4,INPUT);
 }
 
 void loop() {
@@ -56,13 +63,14 @@ void loop() {
   digitalWrite(EN2_PIN, HIGH);
   //Lectura de sensores
   int L1 = digitalRead(S1);
-  int L2 = digitalRead(S2);
-  if (L1==0 || L2==0){
-    Serial.println("Obstaculo detectado");
-    Reverse(MOTOR_2);
+  
+  int L4 = analogRead(S4);
+  if (L1==0 && (L4>700)){
+    Serial.println("En pista");
+    Forward(MOTOR_2);
     Reverse(MOTOR_1);
-  }else{
-    Serial.println("Libre");
+  }else if (L4<700){
+    Serial.println("Al borde");
     Stop(MOTOR_1);
     Stop(MOTOR_2);
   }
