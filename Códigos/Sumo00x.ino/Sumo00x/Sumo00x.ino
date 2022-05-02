@@ -1,3 +1,4 @@
+
 //Definición de motores
 #define BRAKE 0            //Freno
 #define CW    1            //ClockWise (Rotación horaria)
@@ -18,16 +19,15 @@
 #define PWM_MOTOR_2 3     //PWM Pin
 #define CURRENT_SEN_2 A3  //CS Pin
 #define EN2_PIN A2        //Enable Pin
-#define MOTOR_2 0
+#define MOTOR_2 1
 
 
 short usSpeed = 150;      //Velocidad por defecto
 unsigned short usMotor_Status = BRAKE;  //Estado Motor
 
 //Definición de sensores
-#define S2 8
-#define S1 7      //Infrarrojo - Pin digital
-//const int S2 = 8; //Seguidor de linea - Pin Digital
+#define S1 26      //Infrarrojo - Pin digital
+const int S2 = 27; //Seguidor de linea - Pin Digital
 
 void setup() {
   Serial.begin(9600);
@@ -51,38 +51,47 @@ void setup() {
 }
 
 void loop() {
+  //Habilita motores
+  digitalWrite(EN1_PIN, HIGH);
+  digitalWrite(EN2_PIN, HIGH);
+  //Lectura de sensores
   int L1 = digitalRead(S1);
   int L2 = digitalRead(S2);
   if (L1==0 || L2==0){
     Serial.println("Obstaculo detectado");
-    Forward(MOTOR_1);
-    Forward(MOTOR_2);
+    Reverse(MOTOR_2);
+    Reverse(MOTOR_1);
   }else{
     Serial.println("Libre");
-    digitalWrite(S2,LOW);
     Stop(MOTOR_1);
     Stop(MOTOR_2);
   }
 }
 
-//Funcion de parada
+//Funcion parada
 void Stop(uint8_t motor){ 
   usMotor_Status = BRAKE;
   motorGo(motor, usMotor_Status, 0);
 }
 
-//Funcion de avance
+//Funcion avance
 void Forward(uint8_t motor){
   usMotor_Status = CW;
   motorGo(motor, usMotor_Status, usSpeed);
 }
 
+//Funcion retroceso
+void Reverse(uint8_t motor){
+  usMotor_Status = CCW;
+  motorGo(motor, usMotor_Status, usSpeed);
+}
+  
 //Funcion Motor anda
 /*Funcion que controla las variables
 motor(0 o 1), direccion (cw o ccw) y pwm (0 a 255)*/
 void motorGo(uint8_t motor, uint8_t direccion, uint8_t pwm){
-  if(motor == MOTOR_1){
-    Serial.println("entra aca");
+  if(motor == MOTOR_2){
+    Serial.println("Motor 2");
     if(direccion == CW){
       digitalWrite(MOTOR_A1_PIN, LOW); 
       digitalWrite(MOTOR_B1_PIN, HIGH);
@@ -94,7 +103,8 @@ void motorGo(uint8_t motor, uint8_t direccion, uint8_t pwm){
       digitalWrite(MOTOR_B1_PIN, LOW);            
     }
     analogWrite(PWM_MOTOR_1, pwm); 
-  }else{
+  }else if(motor == MOTOR_1){
+    Serial.println("Motor 1");
     if(direccion == CW){
       digitalWrite(MOTOR_A2_PIN, LOW); 
       digitalWrite(MOTOR_B2_PIN, HIGH);
