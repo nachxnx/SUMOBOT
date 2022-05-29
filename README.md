@@ -1,4 +1,4 @@
-# SUMOBOT CHUZON
+# SUMOBOT NACHO LIBRE
 
 ### Integrantes
 - Nicolás Caceres
