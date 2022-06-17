@@ -1,5 +1,5 @@
 // for Arduino microcontroller
-const int digital_pin = 6;
+//const int digital_pin = 6;
 const int analog_pin = A0;
 
 // for ESP8266 microcontroller
@@ -12,13 +12,13 @@ const int analog_pin = A0;
 
 void setup(){
   Serial.begin(9600);
-  pinMode(digital_pin,INPUT);
+  ///pinMode(digital_pin,INPUT);
 }
 
 void loop(){
   Serial.print("Analog Reading=");
   Serial.print(analogRead(analog_pin));
-  Serial.print("t Digital Reading=");
-  Serial.println(digitalRead(digital_pin));
+  //Serial.print("t Digital Reading=");
+  //Serial.println(digitalRead(digital_pin));
   delay(1000);
 }
