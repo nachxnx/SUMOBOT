@@ -1,0 +1,12 @@
++Integrantes del grupo:
+-Jessica Pizarro
+-Ignacio Noguera
+-Nicolas Caceres
+-Hector Velazquez
++Nombre del Robot: NACHOBOT 
++Bateria: 1550 mAh
++Controlador:VNHS2P30 MONSTER MOTOR SHIELD 
++Peso aprox: 2.8 KG
++Costo aprox: 1.500.000 Gs
++Motor: 200 RPM
++Chasis: ALUMINIO
